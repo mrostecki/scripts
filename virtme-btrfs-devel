@@ -1,0 +1,14 @@
+#!/bin/bash
+
+virtme-run \
+    --kdir . \
+    --disk 1=$HOME/disks/btrfs-devel-1.img \
+    --disk 2=$HOME/disks/btrfs-devel-2.img \
+    --disk 3=$HOME/disks/btrfs-devel-3.img \
+    --disk 4=$HOME/disks/btrfs-devel-4.img \
+    --disk 5=$HOME/disks/btrfs-devel-5.img \
+    --disk 6=$HOME/disks/btrfs-devel-6.img \
+    --disk 7=$HOME/disks/btrfs-devel-7.img \
+    --cpus 4 \
+    --memory 8G \
+    --rwdir /tmp/fstests=$HOME/repos/xfstests-dev
