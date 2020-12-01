@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+function help {
+    script_name=$(basename "$0")
+    printf "Usage:\n  $script_name [DIRECTORY] [PACKAGE]...\n"
+}
+
+while ":"; do
+    case "$1" in
+	-h | --help)
+	    help
+	    exit 0
+	    ;;
+	*)
+	    break
+    esac
+done
+
+if [ -z "$1" ]; then
+    echo "ERROR: please provide a dir"
+    help
+    exit 1
+fi
+
+ROOTFS=$(realpath "$1")
+
+function exec_zypper {
+    sudo zypper -n \
+	   --root "$ROOTFS" \
+	   --gpg-auto-import-keys \
+	   "$@"
+}
+
+if [ ! -f "$ROOTFS" ]; then
+    mkdir "$ROOTFS"
+fi
+
+exec_zypper ar http://download.opensuse.org/tumbleweed/repo/oss oss
+exec_zypper ref -f
+
+if [ "$#" -gt 1 ]; then
+    exec_zypper in \
+		--download-in-advance \
+		-l -y \
+		--no-recommends \
+		"${@:2}"
+fi
