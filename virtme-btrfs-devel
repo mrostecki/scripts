@@ -12,6 +12,4 @@ virtme-run \
     --cpus 4 \
     --memory 8G \
     --rwdir /tmp/fstests=$HOME/repos/xfstests-dev \
-    --initcmd "mknod /dev/btrfs-control c 10 234" \
-    --initcmd "mkfs.btrfs -f /dev/sda" \
-    --initcmd "mount /dev/sda /mnt/test"
+    --initcmd "mknod /dev/btrfs-control c 10 234"
