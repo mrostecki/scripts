@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -eux
+
+FORMAT_BTRFS=${FORMAT_BTRFS:-"true"}
+
+if [[ "${FORMAT_BTRFS}" == "true" ]]; then
+    umount /mnt/test || true
+    mkfs.btrfs -f -d raid1c4 -m raid1c4 /dev/sda /dev/sdb /dev/sdc /dev/sdd
+    mount /dev/sda /mnt/test
+fi
+
+pushd /mnt/test
+fio "$@"
+popd
